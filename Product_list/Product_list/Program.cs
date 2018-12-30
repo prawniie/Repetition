@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Product_list
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
