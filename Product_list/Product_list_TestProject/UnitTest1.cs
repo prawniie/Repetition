@@ -10,7 +10,7 @@ namespace Product_list_TestProject
         [TestMethod]
         public void should_return_true_when_name_consists_of_letters_followed_by_digits()
         {
-            bool result = x.CheckIfInputIsValid("lg-350");
+            bool result = x.CheckIfInputIsValid2("lg-350");
             bool expected = true;
 
             Assert.AreEqual(result,expected);

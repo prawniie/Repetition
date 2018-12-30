@@ -14,6 +14,8 @@ namespace Product_list
             List<string> productList = AskUserForProducts();
             List<string> sortedProductList = SortList(productList);
             PrintProducts(sortedProductList);
+
+            Console.ReadLine();
         }
 
         private static List<string> SortList(List<string> productList)
@@ -59,21 +61,37 @@ namespace Product_list
             try
             {
                 string[] productName = product.Split("-");
+                int x = 0;
 
                 if (!Regex.IsMatch(productName[0], @"^[a-zåäö]+$", RegexOptions.IgnoreCase))
                 {
                     Console.WriteLine("Wrong format on the left side of the product name");
                     return false;
                 }
-                else if (int.Parse(productName[1]) < 200 || int.Parse(productName[1]) > 500)
+                else if (!int.TryParse(productName[1], out x))
                 {
                     Console.WriteLine("Wrong format on the right side of the product name");
                     return false;
+                }
+                else if (int.TryParse(productName[1], out x))
+                {
+                    if (x < 200 || x > 500)
+                    {
+                        Console.WriteLine("The number must be between 200 and 500");
+                        return false;
+                    }
+
+                    return true;
                 }
                 else
                 {
                     return true;
                 }
+            }
+            catch(IndexOutOfRangeException)
+            {
+                Console.WriteLine("You have to enter a product name with letters followed by a '-' followed by digits.");
+                return false;
             }
             catch (Exception ex)
             {
@@ -86,6 +104,12 @@ namespace Product_list
         private static void PrintProducts(List<string> productList)
         {
             Console.WriteLine("\nYou entered the following products: \n");
+
+            if (productList.Count == 0)
+            {
+                Console.WriteLine("Oh no! There doesn't seem to be any products in the list.");
+            }
+
             foreach (var product in productList)
             {
                 Console.WriteLine($"* {product}");
